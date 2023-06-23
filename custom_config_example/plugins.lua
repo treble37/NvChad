@@ -120,7 +120,7 @@ local plugins = {
       end, { expr = true })
     end,
   },
-
+  { 'wakatime/vim-wakatime', event = 'VeryLazy' },
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
