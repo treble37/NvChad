@@ -1,4 +1,4 @@
-local overrides = require("custom.configs.overrides")
+local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -25,7 +25,7 @@ local plugins = {
   -- override plugin configs
   {
     "williamboman/mason.nvim",
-    opts = overrides.mason
+    opts = overrides.mason,
   },
 
   {
@@ -49,58 +49,77 @@ local plugins = {
   -- custom plugins
   {
     "ray-x/go.nvim",
-    dependencies = {  -- optional packages
+    dependencies = { -- optional packages
       "ray-x/guihua.lua",
     },
     config = function()
       require("go").setup()
     end,
-    event = {"CmdlineEnter"},
-    ft = {"go", 'gomod'},
-    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
- },
- {
+    event = { "CmdlineEnter" },
+    ft = { "go", "gomod" },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+  },
+  {
     "simrat39/rust-tools.nvim",
-    dependencies = {"neovim/nvim-lspconfig"},
+    dependencies = { "neovim/nvim-lspconfig" },
     config = function()
       require("rust-tools").setup()
     end,
-    event = {"CmdlineEnter"}
- },
- {
-    "rust-lang/rust.vim"
- },
- {
-   "elixir-tools/elixir-tools.nvim",
-   version = "*",
-   event = { "BufReadPre", "BufNewFile" },
-   config = function()
-     local elixir = require("elixir")
-     local elixirls = require("elixir.elixirls")
+    event = { "CmdlineEnter" },
+  },
+  {
+    "rust-lang/rust.vim",
+  },
+  {
+    "elixir-tools/elixir-tools.nvim",
+    version = "*",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local elixir = require "elixir"
+      local elixirls = require "elixir.elixirls"
 
-     elixir.setup {
-       credo = {},
-       elixirls = {
-         enable = true,
-         cmd = "/Users/bruce/Documents/github_code/elixir-ls/release/language_server.sh",
-         settings = elixirls.settings {
-           dialyzerEnabled = true,
-           fetchDeps = false, 
-           enableTestLenses = false,
-           suggestSpecs = false,
+      elixir.setup {
+        credo = {},
+        elixirls = {
+          enable = true,
+          cmd = "/Users/bruce/Documents/github_code/elixir-ls/release/language_server.sh",
+          settings = elixirls.settings {
+            dialyzerEnabled = true,
+            fetchDeps = false,
+            enableTestLenses = false,
+            suggestSpecs = false,
+          },
+          on_attach = function(client, bufnr)
+            vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
+            vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
+            vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
+          end,
         },
-         on_attach = function(client, bufnr)
-           vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
-           vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
-           vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
-         end,
-       }
-     }
-   end,
-   dependencies = {
-     "nvim-lua/plenary.nvim",
-   },
- }
+      }
+    end,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
+  {
+    "Exafunction/codeium.vim",
+    lazy = false,
+    config = function()
+      -- Change '<C-g>' here to any keycode you like.
+      vim.keymap.set("i", "<C-g>", function()
+        return vim.fn["codeium#Accept"]()
+      end, { expr = true })
+      vim.keymap.set("i", "<c-;>", function()
+        return vim.fn["codeium#CycleCompletions"](1)
+      end, { expr = true })
+      vim.keymap.set("i", "<c-,>", function()
+        return vim.fn["codeium#CycleCompletions"](-1)
+      end, { expr = true })
+      vim.keymap.set("i", "<c-x>", function()
+        return vim.fn["codeium#Clear"]()
+      end, { expr = true })
+    end,
+  },
 
   -- To make a plugin not be loaded
   -- {
