@@ -120,7 +120,11 @@ local plugins = {
       end, { expr = true })
     end,
   },
-  { 'wakatime/vim-wakatime', event = 'VeryLazy' },
+  { "wakatime/vim-wakatime", event = "VeryLazy" },
+  { "tpope/vim-projectionist", lazy = false },
+  { "c-brenn/fuzzy-projectionist.vim", lazy = false },
+  { "andyl/vim-projectionist-elixir", lazy = false },
+  { "vim-test/vim-test", lazy = false },
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
