@@ -125,6 +125,10 @@ local plugins = {
   { "c-brenn/fuzzy-projectionist.vim", lazy = false },
   { "andyl/vim-projectionist-elixir", lazy = false },
   { "vim-test/vim-test", lazy = false },
+  { "tpope/vim-abolish", lazy = false},
+  { "tpope/vim-fugitive", lazy = false},
+  -- vim-gutentags not working on MacOS
+  { "ludovicchabant/vim-gutentags", lazy = false },
   -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
